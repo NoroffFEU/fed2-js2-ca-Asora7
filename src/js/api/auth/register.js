@@ -1,58 +1,60 @@
-import { API_AUTH_REGISTER } from '../constants.js';
-import { getHeaders } from '../headers.js';
 
-// Function to handle user registration
-export async function registerUser(username, email, password) {
-  try {
-    const response = await fetch(API_AUTH_REGISTER, {
-      method: 'POST',
-      headers: getHeaders(),
-      body: JSON.stringify({ username, email, password })
-    });
+console.log("register.js is loaded");
 
-    const data = await response.json();
+import { API_AUTH_REGISTER } from '../constants.js';  // Import the register endpoint
+import { getHeaders } from '../headers.js';  // Import the headers function
 
-    if (!response.ok) {
-      throw new Error(data.message || 'Registration failed');
+// Function to register a new user
+export async function registerUser(userData) {
+    try {
+        console.log("User data being sent:", userData);  // Log user data
+
+        const response = await fetch(API_AUTH_REGISTER, {
+            method: 'POST',
+            headers: getHeaders(),
+            body: JSON.stringify(userData),
+        });
+
+        if (!response.ok) {
+            const errorData = await response.json();  // Log the error response
+            throw new Error(`Failed to register: ${errorData.errors[0].message}`);
+        }
+
+        const data = await response.json();
+        console.log('Registration successful:', data);
+
+        // Redirect to the login page
+        window.location.href = '/auth/login/index.html';  // Adjust the path as needed
+
+        return data;  // Return data for further processing if needed
+    } catch (error) {
+        console.error('Error during registration:', error);
     }
-
-    console.log('User registered successfully:', data);
-
-    // Assuming the JWT token is included in the response (adjust if needed)
-    const token = data.token; // Change this if the token is in a different property
-
-    // Store the token in localStorage
-    if (token) {
-      localStorage.setItem('authToken', token);
-      console.log('Token stored in localStorage');
-    }
-
-    // Optionally redirect the user to the login page after registration
-    // window.location.href = '/auth/login/'; // Uncomment if you want to redirect
-
-  } catch (error) {
-    console.error('Error during registration:', error);
-  }
 }
 
-// Wait for the DOM to load
-document.addEventListener('DOMContentLoaded', () => {
-  const form = document.forms['register'];
 
-  form.addEventListener('submit', async (event) => {
-    event.preventDefault(); // Prevent the form from reloading the page
+  
 
-    // Get the form values
-    const username = form.name.value;
-    const email = form.email.value;
-    const password = form.password.value;
+// Form submission handler
+const registrationForm = document.forms['register'];  // Use the form name 'register'
 
-    // Call the registerUser function and pass the form values
-    await registerUser(username, email, password);
+if (registrationForm) {
+  registrationForm.addEventListener('submit', async (event) => {
+    event.preventDefault();  // Prevent form from refreshing the page
 
-    // Optionally redirect or show a message after registration
-    // window.location.href = '/auth/login/'; // Uncomment to redirect to login after success
+    const formData = new FormData(registrationForm);  // Get form data
+
+    const userData = {
+      name: formData.get('name'),
+      email: formData.get('email'),
+      password: formData.get('password'),
+    };
+
+    await registerUser(userData);  // Call the register function with user input
   });
-});
+}
+
+
+
 
 
