@@ -29,7 +29,7 @@ export async function loginUser(userData) {
             localStorage.setItem('token', data.data.accessToken);  // Store the token
             console.log('JWT token saved to localStorage:', data.data.accessToken);
 
-            window.location.href = '/index.html';
+            window.location.href = '/';
             
         } else {
             console.log('No token returned in the response.');

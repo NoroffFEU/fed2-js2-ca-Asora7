@@ -24,7 +24,7 @@ export async function registerUser(userData) {
         console.log('Registration successful:', data);
 
         // Redirect to the login page
-        window.location.href = '/auth/login/index.html';  // Adjust the path as needed
+        window.location.href = '/auth/login/';  // Adjust the path as needed
 
         return data;  // Return data for further processing if needed
     } catch (error) {
