@@ -14,6 +14,8 @@ export async function loginUser(userData) {
             body: JSON.stringify(userData),
         });
 
+        //console.log('Login response status:', response.status);
+
         const data = await response.json();  // Parse the JSON response
 
         if (!response.ok) {
@@ -26,6 +28,9 @@ export async function loginUser(userData) {
         if (data.data.accessToken) {
             localStorage.setItem('token', data.data.accessToken);  // Store the token
             console.log('JWT token saved to localStorage:', data.data.accessToken);
+
+            window.location.href = '/index.html';
+            
         } else {
             console.log('No token returned in the response.');
         }
@@ -54,6 +59,7 @@ if (loginForm) {
         await loginUser(userData);  // Call the login function with user input
     });
 }
+
 
 
 
