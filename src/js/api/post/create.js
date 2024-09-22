@@ -1,12 +1,12 @@
-import { API_SOCIAL_POSTS } from '../constants.js';  // Import the posts endpoint
-import { getHeaders } from '../headers.js';  // Import the updated headers
+import { API_SOCIAL_POSTS } from '../constants.js';  
+import { getHeaders } from '../headers.js';  
 
 export async function createPost({ title, body, tags, media }) {
     try {
         const response = await fetch(API_SOCIAL_POSTS, {
             method: 'POST',
-            headers: getHeaders(),  // Uses updated getHeaders with token
-            body: JSON.stringify({ title, body, tags, media }),  // Send post data
+            headers: getHeaders(),
+            body: JSON.stringify({ title, body, tags, media }),
         });
 
         if (!response.ok) {
@@ -17,29 +17,34 @@ export async function createPost({ title, body, tags, media }) {
         const data = await response.json();
         console.log('Post created successfully:', data);
 
-        // Optionally redirect on success
-        // window.location.href = '/post/index.html';  // Redirect to your desired page
-
     } catch (error) {
         console.error('Error during post creation:', error);
     }
 }
 
-const createPostForm = document.forms['createPost'];  // Use the form name 'createPost'
+const createPostForm = document.forms['createPost'];  
 
 if (createPostForm) {
     createPostForm.addEventListener('submit', async (event) => {
-        event.preventDefault();  // Prevent the form from refreshing the page
+        event.preventDefault();  
 
-        const formData = new FormData(createPostForm);  // Get the form data
+        const formData = new FormData(createPostForm);  
 
         const postData = {
             title: formData.get('title'),
             body: formData.get('body'),
-            media: formData.get('media') || null,  // Optional, set to null if empty
+            tags: formData.get('tags') ? formData.get('tags').split(',').map(tag => tag.trim()) : [],
+            media: formData.get('media') ? { url: formData.get('media'), alt: '' } : null,
         };
 
-        await createPost(postData);  // Call the function to create a post
+        await createPost(postData);  
     });
 }
+
+
+
+
+
+
+
 
