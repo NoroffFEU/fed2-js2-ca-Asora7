@@ -16,30 +16,25 @@ export async function createPost({ title, body, tags, media }) {
 
         const data = await response.json();
         console.log('Post created successfully:', data);
+        return data;  // Return the created post data
 
     } catch (error) {
         console.error('Error during post creation:', error);
+        return null;  // Return null on failure
     }
 }
 
-const createPostForm = document.forms['createPost'];  
 
-if (createPostForm) {
-    createPostForm.addEventListener('submit', async (event) => {
-        event.preventDefault();  
 
-        const formData = new FormData(createPostForm);  
 
-        const postData = {
-            title: formData.get('title'),
-            body: formData.get('body'),
-            tags: formData.get('tags') ? formData.get('tags').split(',').map(tag => tag.trim()) : [],
-            media: formData.get('media') ? { url: formData.get('media'), alt: '' } : null,
-        };
 
-        await createPost(postData);  
-    });
-}
+
+
+
+
+
+
+
 
 
 
