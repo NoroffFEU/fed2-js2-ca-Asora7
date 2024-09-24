@@ -22,7 +22,8 @@ export async function fetchUserPosts() {
         const data = await response.json();
         console.log('Posts fetched successfully:', data); // Log the response for debugging
 
-        return data.data || []; // Ensure to return an empty array if data.data is undefined
+        // Return only the latest 12 posts
+        return data.data ? data.data.slice(0, 12) : []; // Slice to get the latest 12 posts
     } catch (error) {
         console.error('Error fetching user posts:', error);
         return []; // Return an empty array on error
