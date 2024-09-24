@@ -1,4 +1,5 @@
-import { fetchUserPosts } from '../../api/profile/read.js'; // Import the function to fetch user posts
+// Import your fetchUserPosts function from the appropriate location
+import { fetchUserPosts } from '../../api/profile/read.js'; 
 
 // Function to render posts on the profile page
 async function renderUserPosts() {
@@ -35,7 +36,15 @@ async function renderUserPosts() {
 
             postElement.appendChild(postTitle);
             postElement.appendChild(postBody);
-            postContainer.appendChild(postElement);
+
+            // Create and append the Edit button
+            const editButton = document.createElement('a');
+            editButton.href = `/post/edit/?id=${post.id}`; // Link to the edit page with post ID
+            editButton.textContent = 'Edit Post'; // Button text
+            editButton.classList.add('edit-button'); // Optional: add a class for styling
+
+            postElement.appendChild(editButton); // Append the Edit button to the post element
+            postContainer.appendChild(postElement); // Append the post element to the container
         });
 
         // Check if no posts were found
