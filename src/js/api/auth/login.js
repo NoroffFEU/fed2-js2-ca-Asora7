@@ -14,8 +14,6 @@ export async function loginUser(userData) {
             body: JSON.stringify(userData),
         });
 
-        //console.log('Login response status:', response.status);
-
         const data = await response.json();  // Parse the JSON response
 
         if (!response.ok) {
@@ -29,8 +27,15 @@ export async function loginUser(userData) {
             localStorage.setItem('token', data.data.accessToken);  // Store the token
             console.log('JWT token saved to localStorage:', data.data.accessToken);
 
-            window.location.href = '/';
-            
+            // Store the username (assuming the API response contains it)
+            if (data.data.user && data.data.user.username) {
+                localStorage.setItem('username', data.data.user.username);  // Store the username
+                console.log('Username saved to localStorage:', data.data.user.username);
+            } else {
+                console.log('No username returned in the response.');
+            }
+
+            window.location.href = '/';  // Redirect to homepage or another page
         } else {
             console.log('No token returned in the response.');
         }
@@ -40,7 +45,6 @@ export async function loginUser(userData) {
         console.error('Error during login:', error);
     }
 }
-
 
 // Form submission handler
 const loginForm = document.forms['login'];  // Use the form name 'login'

@@ -1,10 +1,9 @@
 import { createPost } from "../../api/post/create.js";
 
-// Handle the form submission
 export async function onCreatePost(event) {
-    event.preventDefault();  // Prevent the default form submission
+    event.preventDefault();  
 
-    const formData = new FormData(event.target);  // Capture form data
+    const formData = new FormData(event.target);  
     const postData = {
         title: formData.get('title'),
         body: formData.get('body'),
@@ -12,20 +11,20 @@ export async function onCreatePost(event) {
         media: formData.get('media') ? { url: formData.get('media'), alt: '' } : null,
     };
 
-    const createdPost = await createPost(postData);  // Create the post via the API
+    const createdPost = await createPost(postData);  
 
     if (createdPost) {
-        displayCreatedPost(createdPost);  // Display the created post in the UI
+        localStorage.setItem('latestPost', JSON.stringify(createdPost.data));
+        displayCreatedPost(createdPost);  
     }
 }
 
 // Function to display the created post
 function displayCreatedPost(post) {
-    const postData = post.data;  // Access the `data` property of the response
+    const postData = post.data;  
 
     const postContainer = document.getElementById('postContainer');
     
-    // Create a post element
     const postElement = document.createElement('div');
     postElement.classList.add('post');
 
@@ -45,7 +44,17 @@ function displayCreatedPost(post) {
     postElement.appendChild(postTitle);
     postElement.appendChild(postBody);
 
-    // Append the post element to the container
+    const viewProfileButton = document.createElement('button');
+    viewProfileButton.textContent = 'View in Profile';
+    viewProfileButton.addEventListener('click', () => {
+
+        window.location.href = '/profile/';
+    });
+
+    postElement.appendChild(viewProfileButton);
+
     postContainer.appendChild(postElement);
 }
+
+
 
