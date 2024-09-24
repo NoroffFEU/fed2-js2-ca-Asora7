@@ -1,5 +1,3 @@
-console.log("login.js is loaded");
-
 import { API_AUTH_LOGIN } from '../constants.js';  // Import the login endpoint
 import { getHeaders } from '../headers.js';  // Import the headers function
 
@@ -15,7 +13,7 @@ export async function loginUser(userData) {
         });
 
         const data = await response.json();  // Parse the JSON response
-
+        
         if (!response.ok) {
             throw new Error(`Login failed: ${data.errors[0].message}`);
         }
@@ -27,10 +25,10 @@ export async function loginUser(userData) {
             localStorage.setItem('token', data.data.accessToken);  // Store the token
             console.log('JWT token saved to localStorage:', data.data.accessToken);
 
-            // Store the username (assuming the API response contains it)
-            if (data.data.user && data.data.user.username) {
-                localStorage.setItem('username', data.data.user.username);  // Store the username
-                console.log('Username saved to localStorage:', data.data.user.username);
+            // Store the username
+            if (data.data.name) {  // Assuming 'name' holds the username
+                localStorage.setItem('username', data.data.name);  // Store the username
+                console.log('Username saved to localStorage:', data.data.name);
             } else {
                 console.log('No username returned in the response.');
             }
@@ -46,7 +44,7 @@ export async function loginUser(userData) {
     }
 }
 
-// Form submission handler
+// Form submission handler remains the same
 const loginForm = document.forms['login'];  // Use the form name 'login'
 
 if (loginForm) {
@@ -63,6 +61,7 @@ if (loginForm) {
         await loginUser(userData);  // Call the login function with user input
     });
 }
+
 
 
 
