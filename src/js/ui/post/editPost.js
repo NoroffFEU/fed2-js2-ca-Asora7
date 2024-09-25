@@ -1,13 +1,12 @@
-import { fetchPostById } from '../../api/post/read.js'; // Adjust the import path as needed
-import { updatePost } from '../../api/post/update.js'; // Import the updatePost function
+import { fetchPostById } from '../../api/post/read.js'; 
+import { updatePost } from '../../api/post/update.js'; 
+import { deletePost } from '../../api/post/delete.js'; // Import delete function
 
-// Function to get URL parameters
 function getUrlParameter(name) {
     const urlParams = new URLSearchParams(window.location.search);
     return urlParams.get(name);
 }
 
-// Function to render the post for editing
 async function renderPostForEditing(postId) {
     if (!postId) {
         console.error('No post ID provided for rendering');
@@ -21,41 +20,34 @@ async function renderPostForEditing(postId) {
             throw new Error('Post not found');
         }
 
-        // Populate form fields with post data
+        // Fill the form with the current post details
         document.getElementById('postTitle').value = post.title;
         document.getElementById('postBody').value = post.body;
         if (post.media) {
-            document.getElementById('postMedia').value = post.media.url; // For media URL input
+            document.getElementById('postMedia').value = post.media.url; 
         }
 
-        // Set up form submission handler
+        // Add submit event listener for the edit form
         const form = document.getElementById('editPostForm');
         form.addEventListener('submit', async (event) => {
-            event.preventDefault(); // Prevent the default form submission
+            event.preventDefault(); 
 
-            // Gather form data
-            const mediaUrl = document.getElementById('postMedia').value.trim(); // Get and trim media URL input
-
-            // Create updated post object
+            const mediaUrl = document.getElementById('postMedia').value.trim(); 
             const updatedPost = {
                 title: document.getElementById('postTitle').value,
                 body: document.getElementById('postBody').value,
-                tags: [], // Adjust based on your requirements
+                tags: [], 
             };
 
-            // Add media only if a valid URL is provided
             if (mediaUrl) {
                 updatedPost.media = {
                     url: mediaUrl,
-                    alt: 'Media Description', // Optional description, adjust as needed
+                    alt: 'Media Description', 
                 };
             }
 
-            // Call the updatePost function
             try {
                 const result = await updatePost(postId, updatedPost);
-
-                // Display updated post if successful
                 if (result) {
                     displayUpdatedPost(result);
                 } else {
@@ -65,9 +57,27 @@ async function renderPostForEditing(postId) {
                 console.error('Error updating post:', error);
             }
         });
+
+        // Add click event listener for the delete button
+        const deleteButton = document.getElementById('deletePostButton');
+        deleteButton.addEventListener('click', async () => {
+            const confirmation = confirm('Are you sure you want to delete this post?');
+            if (confirmation) {
+                try {
+                    await deletePost(postId); // Call the delete function
+                    alert('Post deleted successfully!');
+                    // Optionally, redirect to another page after deletion, e.g., profile or home
+                    window.location.href = '/profile/';
+                } catch (error) {
+                    console.error('Error deleting post:', error);
+                    alert('Failed to delete the post.');
+                }
+            }
+        });
+
     } catch (error) {
         console.error('Error loading post for editing:', error);
-        document.getElementById('postContainer').innerHTML = '<p>Failed to load post. Please try again later.</p>'; // Error message
+        document.getElementById('postContainer').innerHTML = '<p>Failed to load post. Please try again later.</p>';
     }
 }
 
@@ -92,21 +102,16 @@ function displayUpdatedPost(post) {
     postContainer.appendChild(postTitle);
     postContainer.appendChild(postBody);
 
-    // Append the updated post to the body or a specific container
-    document.body.appendChild(postContainer); // Adjust as needed
+    document.body.appendChild(postContainer);
 }
 
 // Check if we're on the edit page
 if (window.location.pathname.includes('/post/edit/')) {
-    const postId = getUrlParameter('id'); // Get post ID from the URL
-
-    // Debugging output
-    console.log('Current URL:', window.location.href);
-    console.log('Post ID from URL:', postId);
+    const postId = getUrlParameter('id'); 
 
     if (!postId) {
         console.error("No post ID provided in the URL");
     } else {
-        renderPostForEditing(postId); // Pass postId as an argument
+        renderPostForEditing(postId);
     }
 }
