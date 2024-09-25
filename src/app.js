@@ -13,4 +13,6 @@ if (logoutButton) {
 
 import './js/api/post/create.js'; // API for creating posts
 
+import './js/ui/post/editPost.js';
+
 await router(window.location.pathname);

@@ -1,5 +1,5 @@
 // Import your fetchUserPosts function from the appropriate location
-import { fetchUserPosts } from '../../api/profile/read.js'; 
+import { fetchUserPosts } from '../../api/profile/read.js';
 
 // Function to render posts on the profile page
 async function renderUserPosts() {
@@ -14,7 +14,13 @@ async function renderUserPosts() {
         }
 
         // Clear any previous posts
-        postContainer.innerHTML = ''; 
+        postContainer.innerHTML = '';
+
+        // Check if no posts were found
+        if (posts.length === 0) {
+            postContainer.innerHTML = '<p>No posts found.</p>'; // Message if no posts
+            return; // Exit early since there are no posts to render
+        }
 
         // Render each post
         posts.forEach(post => {
@@ -46,11 +52,6 @@ async function renderUserPosts() {
             postElement.appendChild(editButton); // Append the Edit button to the post element
             postContainer.appendChild(postElement); // Append the post element to the container
         });
-
-        // Check if no posts were found
-        if (posts.length === 0) {
-            postContainer.innerHTML = '<p>No posts found.</p>'; // Message if no posts
-        }
     } catch (error) {
         console.error('Error loading user posts:', error);
         postContainer.innerHTML = '<p>Failed to load posts. Please try again later.</p>'; // Error message
