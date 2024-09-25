@@ -7,23 +7,21 @@ function getUrlParameter(name) {
 }
 
 // Function to render the post for editing
-async function renderPostForEditing() {
-    const postId = getUrlParameter('id'); // Get post ID from the URL
-
+async function renderPostForEditing(postId) {
     if (!postId) {
-        console.error('No post ID provided in the URL');
+        console.error('No post ID provided for rendering');
         return;
     }
 
     try {
-        const post = await fetchPostById(postId); // Fetch the post using the ID
+        const post = await fetchPostById(postId); 
 
         if (!post) {
             throw new Error('Post not found');
         }
 
         // Populate form fields with post data
-        document.getElementById('postTitle').value = post.title; // Assuming you have an input with this ID
+        document.getElementById('postTitle').value = post.title; 
         document.getElementById('postBody').value = post.body;
 
         if (post.media) {
@@ -35,5 +33,21 @@ async function renderPostForEditing() {
     }
 }
 
-// Call the function to load the post when the script runs
-renderPostForEditing();
+// Check if we're on the edit page
+if (window.location.pathname.includes('/post/edit/')) {
+    // Call to get post ID
+    const postId = getUrlParameter('id'); // Get post ID from the URL
+
+    // Debugging output
+    console.log('Current URL:', window.location.href);
+    console.log('Post ID from URL:', postId);
+
+    // Check if postId is null or undefined
+    if (!postId) {
+        console.error("No post ID provided in the URL");
+        // Optionally redirect or display a message to the user
+    } else {
+        // Proceed to render post for editing
+        renderPostForEditing(postId); // Pass postId as an argument
+    }
+}

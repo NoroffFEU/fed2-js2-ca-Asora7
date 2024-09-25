@@ -18,8 +18,8 @@ async function renderUserPosts() {
 
         // Check if no posts were found
         if (posts.length === 0) {
-            postContainer.innerHTML = '<p>No posts found.</p>'; // Message if no posts
-            return; // Exit early since there are no posts to render
+            postContainer.innerHTML = '<p>No posts found.</p>'; 
+            return; 
         }
 
         // Render each post
@@ -46,17 +46,15 @@ async function renderUserPosts() {
             // Create and append the Edit button
             const editButton = document.createElement('a');
             editButton.href = `/post/edit/?id=${post.id}`; // Link to the edit page with post ID
-            editButton.textContent = 'Edit Post'; // Button text
-            editButton.classList.add('edit-button'); // Optional: add a class for styling
+            editButton.textContent = 'Edit Post'; 
 
-            postElement.appendChild(editButton); // Append the Edit button to the post element
-            postContainer.appendChild(postElement); // Append the post element to the container
+            postElement.appendChild(editButton); 
+            postContainer.appendChild(postElement);
         });
     } catch (error) {
         console.error('Error loading user posts:', error);
-        postContainer.innerHTML = '<p>Failed to load posts. Please try again later.</p>'; // Error message
+        postContainer.innerHTML = '<p>Failed to load posts. Please try again later.</p>'; 
     }
 }
 
-// Call the function to load posts when the script runs
 renderUserPosts();
