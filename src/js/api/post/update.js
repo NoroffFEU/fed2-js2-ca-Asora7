@@ -32,4 +32,3 @@ export async function updatePost(id, { title, body, tags = [], media }) {
         throw error; // Rethrow for handling in the calling function
     }
 }
-
