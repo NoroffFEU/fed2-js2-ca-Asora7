@@ -17,7 +17,7 @@ export async function onCreatePost(event) {
     const postData = {
         title: formData.get('title'),
         body: formData.get('body'),
-        tags: formData.get('tags') ? formData.get('tags').split(',').map(tag => tag.trim()) : [],
+        tags: formData.get('tags') ? formData.get('tags').split(',').map(tag => tag.trim()) : undefined,
         media: formData.get('media') ? { url: formData.get('media'), alt: '' } : null,
     };
 
@@ -38,6 +38,7 @@ export async function onCreatePost(event) {
  * @param {string} post.data.title - The title of the post.
  * @param {string} post.data.body - The body text of the post.
  * @param {Object|null} post.data.media - The media object associated with the post.
+ * @param {Array<string>} [post.data.tags] - An optional array of tags associated with the post.
  * @returns {void}
  */
 
@@ -62,13 +63,18 @@ function displayCreatedPost(post) {
         postElement.appendChild(postMedia);
     }
 
+    if (postData.tags && postData.tags.length > 0) {
+        const tagList = document.createElement('p');
+        tagList.textContent = 'Tags: ' + postData.tags.join(', ');
+        postElement.appendChild(tagList);
+    }
+
     postElement.appendChild(postTitle);
     postElement.appendChild(postBody);
 
     const viewProfileButton = document.createElement('button');
     viewProfileButton.textContent = 'View in Profile';
     viewProfileButton.addEventListener('click', () => {
-
         window.location.href = '/profile/';
     });
 

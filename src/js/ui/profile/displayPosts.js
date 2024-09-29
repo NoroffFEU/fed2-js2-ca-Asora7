@@ -36,16 +36,20 @@ async function renderUserPosts() {
             const postBody = document.createElement('p');
             postBody.textContent = post.body;
 
-            postElement.appendChild(postLink); 
-            postElement.appendChild(postBody);
-
             if (post.media) {
                 const postMedia = document.createElement('img');
                 postMedia.src = post.media.url;
                 postMedia.alt = post.media.alt || 'Media';
                 postElement.appendChild(postMedia);
             }
+            if (post.tags && post.tags.length > 0) {
+                const tagList = document.createElement('p');
+                tagList.textContent = 'Tags: ' + post.tags.join(', ');
+                postElement.appendChild(tagList);
+            }
 
+            postElement.appendChild(postLink); 
+            postElement.appendChild(postBody);
             postContainer.appendChild(postElement);
         });
     } catch (error) {
