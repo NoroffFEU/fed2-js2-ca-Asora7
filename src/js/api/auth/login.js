@@ -40,5 +40,6 @@ export async function loginUser(userData) {
         return data;  
     } catch (error) {
         console.error('Error during login:', error);
+        alert(error.message);
     }
 }
