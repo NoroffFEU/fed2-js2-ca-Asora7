@@ -1,15 +1,37 @@
-// src/js/router/views/post.js
+/**
+ * @module post
+ * 
+ * This module handles the rendering of a single post based on the post ID
+ * obtained from the URL. It includes functionality for fetching the post data
+ * and displaying it, along with an option to edit the post.
+ */
 
 import { fetchPostById } from '../../api/post/read.js'; // Import your API function
+import { authGuard } from "../../utilities/authGuard";
+
+authGuard();
+
+/**
+ * Retrieves a URL parameter by name.
+ * 
+ * @param {string} name - The name of the parameter to retrieve from the URL.
+ * @returns {string|null} The value of the parameter, or null if not found.
+ */
 
 function getUrlParameter(name) {
     const urlParams = new URLSearchParams(window.location.search);
     return urlParams.get(name);
 }
 
-// Function to display the single post
+
+/**
+ * Renders a single post by fetching its data using the post ID from the URL.
+ * If the post is successfully fetched, it is displayed in the post container.
+ * Otherwise, an error message is shown.
+ */
+
 async function renderSinglePost() {
-    const postId = getUrlParameter('id'); // Get the post ID from the URL
+    const postId = getUrlParameter('id'); 
 
     if (!postId) {
         console.error('No post ID found in the URL');
@@ -17,13 +39,12 @@ async function renderSinglePost() {
     }
 
     try {
-        const post = await fetchPostById(postId); // Fetch the post by ID
+        const post = await fetchPostById(postId); 
 
         if (!post) {
             throw new Error('Post not found');
         }
 
-        // Render the post on the page
         const postContainer = document.getElementById('singlePostContainer');
         postContainer.innerHTML = `
             <h1>${post.title}</h1>
@@ -32,9 +53,8 @@ async function renderSinglePost() {
             <button id="editButton">Edit</button> <!-- Add an Edit button -->
         `;
 
-        // Add an event listener for the edit button
         document.getElementById('editButton').addEventListener('click', () => {
-            window.location.href = `/post/edit/?id=${postId}`; // Redirect to the edit page with the post ID
+            window.location.href = `/post/edit/?id=${postId}`; 
         });
         
     } catch (error) {
@@ -43,8 +63,9 @@ async function renderSinglePost() {
     }
 }
 
-// Check if we're on the single post page and render the post
 if (window.location.pathname === '/post/view/') {
     renderSinglePost();
 }
+
+
 

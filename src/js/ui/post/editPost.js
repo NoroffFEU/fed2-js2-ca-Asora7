@@ -1,11 +1,26 @@
 import { fetchPostById } from '../../api/post/read.js'; 
 import { updatePost } from '../../api/post/update.js'; 
-import { deletePost } from '../../api/post/delete.js'; // Import delete function
+import { deletePost } from '../../api/post/delete.js'; 
+
+/**
+ * Gets the value of a URL parameter by its name.
+ * @param {string} name - The name of the URL parameter.
+ * @returns {string|null} The value of the parameter, or null if not found.
+ */
 
 function getUrlParameter(name) {
     const urlParams = new URLSearchParams(window.location.search);
     return urlParams.get(name);
 }
+
+
+/**
+ * Renders the post data in the edit form for the given post ID.
+ * Fetches the post data and populates the form fields. Sets up event listeners
+ * for updating and deleting the post.
+ * 
+ * @param {string} postId - The ID of the post to be edited.
+ */
 
 async function renderPostForEditing(postId) {
     if (!postId) {
@@ -20,14 +35,12 @@ async function renderPostForEditing(postId) {
             throw new Error('Post not found');
         }
 
-        // Fill the form with the current post details
         document.getElementById('postTitle').value = post.title;
         document.getElementById('postBody').value = post.body;
         if (post.media) {
             document.getElementById('postMedia').value = post.media.url; 
         }
 
-        // Add submit event listener for the edit form
         const form = document.getElementById('editPostForm');
         form.addEventListener('submit', async (event) => {
             event.preventDefault(); 
@@ -58,15 +71,13 @@ async function renderPostForEditing(postId) {
             }
         });
 
-        // Add click event listener for the delete button
         const deleteButton = document.getElementById('deletePostButton');
         deleteButton.addEventListener('click', async () => {
             const confirmation = confirm('Are you sure you want to delete this post?');
             if (confirmation) {
                 try {
-                    await deletePost(postId); // Call the delete function
+                    await deletePost(postId); 
                     alert('Post deleted successfully!');
-                    // Optionally, redirect to another page after deletion, e.g., profile or home
                     window.location.href = '/profile/';
                 } catch (error) {
                     console.error('Error deleting post:', error);
@@ -81,7 +92,18 @@ async function renderPostForEditing(postId) {
     }
 }
 
-// Function to display the updated post
+
+/**
+ * Displays the updated post on the page after a successful update.
+ * 
+ * @param {Object} post - The updated post object.
+ * @param {string} post.title - The title of the post.
+ * @param {string} post.body - The body content of the post.
+ * @param {Object} [post.media] - The media object associated with the post.
+ * @param {string} post.media.url - The URL of the media.
+ * @param {string} [post.media.alt] - The alt text for the media.
+ */
+
 function displayUpdatedPost(post) {
     const postContainer = document.createElement('div');
     postContainer.classList.add('updated-post');
@@ -105,7 +127,6 @@ function displayUpdatedPost(post) {
     document.body.appendChild(postContainer);
 }
 
-// Check if we're on the edit page
 if (window.location.pathname.includes('/post/edit/')) {
     const postId = getUrlParameter('id'); 
 

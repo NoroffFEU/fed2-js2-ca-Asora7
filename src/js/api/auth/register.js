@@ -1,13 +1,23 @@
+import { API_AUTH_REGISTER } from '../constants.js';  
+import { getHeaders } from '../headers.js';  
 
-console.log("register.js is loaded");
 
-import { API_AUTH_REGISTER } from '../constants.js';  // Import the register endpoint
-import { getHeaders } from '../headers.js';  // Import the headers function
+/**
+ * Registers a new user by sending their data to the authentication API.
+ * If successful, redirects the user to the login page.
+ * 
+ * @async
+ * @function registerUser
+ * @param {Object} userData - The user's registration data, including name, email, and password.
+ * @param {string} userData.name - The user's name.
+ * @param {string} userData.email - The user's email address.
+ * @param {string} userData.password - The user's password.
+ * @returns {Promise<Object>} The response data from the API if registration is successful.
+ * @throws {Error} Throws an error if registration fails or the API returns a non-200 status.
+ */
 
-// Function to register a new user
 export async function registerUser(userData) {
     try {
-        console.log("User data being sent:", userData);  // Log user data
 
         const response = await fetch(API_AUTH_REGISTER, {
             method: 'POST',
@@ -16,33 +26,35 @@ export async function registerUser(userData) {
         });
 
         if (!response.ok) {
-            const errorData = await response.json();  // Log the error response
+            const errorData = await response.json();  
             throw new Error(`Failed to register: ${errorData.errors[0].message}`);
         }
 
         const data = await response.json();
-        console.log('Registration successful:', data);
 
-        // Redirect to the login page
-        window.location.href = '/auth/login/';  // Adjust the path as needed
+        window.location.href = '/auth/login/';  
 
-        return data;  // Return data for further processing if needed
+        return data;  
     } catch (error) {
         console.error('Error during registration:', error);
     }
 }
-
-
   
+/**
+ * Handles the form submission for the registration form.
+ * Gathers form data and calls the registerUser function.
+ * 
+ * @function
+ * @param {Event} event - The form submission event.
+ */
 
-// Form submission handler
-const registrationForm = document.forms['register'];  // Use the form name 'register'
+const registrationForm = document.forms['register'];  
 
 if (registrationForm) {
   registrationForm.addEventListener('submit', async (event) => {
-    event.preventDefault();  // Prevent form from refreshing the page
+    event.preventDefault();  
 
-    const formData = new FormData(registrationForm);  // Get form data
+    const formData = new FormData(registrationForm);  
 
     const userData = {
       name: formData.get('name'),
@@ -50,7 +62,7 @@ if (registrationForm) {
       password: formData.get('password'),
     };
 
-    await registerUser(userData);  // Call the register function with user input
+    await registerUser(userData);  
   });
 }
 

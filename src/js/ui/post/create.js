@@ -1,5 +1,15 @@
 import { createPost } from "../../api/post/create.js";
 
+/**
+ * Handles the form submission for creating a post.
+ * Gathers form data and calls the createPost function from the API.
+ *
+ * @async
+ * @function onCreatePost
+ * @param {Event} event - The form submission event.
+ * @returns {Promise<void>} A promise that resolves when the post creation is complete.
+ */
+
 export async function onCreatePost(event) {
     event.preventDefault();  
 
@@ -19,7 +29,18 @@ export async function onCreatePost(event) {
     }
 }
 
-// Function to display the created post
+/**
+ * Displays the created post on the page.
+ *
+ * @function displayCreatedPost
+ * @param {Object} post - The created post data.
+ * @param {Object} post.data - The post's data.
+ * @param {string} post.data.title - The title of the post.
+ * @param {string} post.data.body - The body text of the post.
+ * @param {Object|null} post.data.media - The media object associated with the post.
+ * @returns {void}
+ */
+
 function displayCreatedPost(post) {
     const postData = post.data;  
 

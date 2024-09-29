@@ -1,4 +1,13 @@
-import { registerUser } from '../../api/auth/register.js'; // Import the registration function
+import { registerUser } from '../../api/auth/register.js'; 
+
+/**
+ * Handles the registration form submission.
+ * This function is triggered when the registration form is submitted.
+ *
+ * @function
+ * @param {Event} event - The event object representing the form submission event.
+ * @returns {Promise<void>} A promise that resolves when the registration process is complete.
+ */
 
 document.getElementById('register-form').addEventListener('submit', async (event) => {
   event.preventDefault();
@@ -16,7 +25,7 @@ document.getElementById('register-form').addEventListener('submit', async (event
   try {
     await registerUser(userData);
     alert('Registration successful!');
-    // Redirect or clear the form as needed
+
   } catch (error) {
     alert('Registration failed: ' + error.message);
   }

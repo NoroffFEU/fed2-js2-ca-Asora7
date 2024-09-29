@@ -1,5 +1,13 @@
 import { fetchUserPosts } from '../../api/profile/read.js';
 
+/**
+ * Renders the user's posts by fetching them from the API and updating the DOM.
+ * 
+ * @async
+ * @function renderUserPosts
+ * @throws {Error} If the fetched posts are not an array or if there is an error while fetching posts.
+ */
+
 async function renderUserPosts() {
     const postContainer = document.getElementById('postContainer');
 
@@ -21,15 +29,14 @@ async function renderUserPosts() {
             const postElement = document.createElement('div');
             postElement.classList.add('post');
 
-            // Create a clickable title that links to the single post page
             const postLink = document.createElement('a');
-            postLink.href = `/post/view/?id=${post.id}`; // Link to single post page with the post ID
+            postLink.href = `/post/view/?id=${post.id}`; 
             postLink.textContent = post.title;
 
             const postBody = document.createElement('p');
             postBody.textContent = post.body;
 
-            postElement.appendChild(postLink); // Make title clickable
+            postElement.appendChild(postLink); 
             postElement.appendChild(postBody);
 
             if (post.media) {
@@ -39,7 +46,6 @@ async function renderUserPosts() {
                 postElement.appendChild(postMedia);
             }
 
-            // Append the post element to the container
             postContainer.appendChild(postElement);
         });
     } catch (error) {

@@ -1,68 +1,44 @@
-import { API_AUTH_LOGIN } from '../constants.js';  // Import the login endpoint
-import { getHeaders } from '../headers.js';  // Import the headers function
+import { API_AUTH_LOGIN } from '../constants.js';  
+import { getHeaders } from '../headers.js';  
 
-// Function to log in a user
+/**
+ * Logs in a user by sending the user data to the authentication API.
+ * If successful, stores the JWT token and username in localStorage.
+ * 
+ * @async
+ * @function loginUser
+ * @param {Object} userData - The user's login data, including email and password.
+ * @param {string} userData.email - The user's email address.
+ * @param {string} userData.password - The user's password.
+ * @returns {Promise<Object>} The response data from the API if successful.
+ * @throws {Error} Throws an error if the login fails or the API returns a non-200 status.
+ */
 export async function loginUser(userData) {
     try {
-        console.log("User data being sent:", userData);  // Log user data
-
         const response = await fetch(API_AUTH_LOGIN, {
             method: 'POST',
             headers: getHeaders(),
             body: JSON.stringify(userData),
         });
 
-        const data = await response.json();  // Parse the JSON response
+        const data = await response.json();  
         
         if (!response.ok) {
             throw new Error(`Login failed: ${data.errors[0].message}`);
         }
 
-        console.log('Login successful:', data);
-
-        // Check for accessToken and store it
         if (data.data.accessToken) {
-            localStorage.setItem('token', data.data.accessToken);  // Store the token
-            console.log('JWT token saved to localStorage:', data.data.accessToken);
+            localStorage.setItem('token', data.data.accessToken); 
 
-            // Store the username
-            if (data.data.name) {  // Assuming 'name' holds the username
-                localStorage.setItem('username', data.data.name);  // Store the username
-                console.log('Username saved to localStorage:', data.data.name);
-            } else {
-                console.log('No username returned in the response.');
-            }
+            if (data.data.name) {  
+                localStorage.setItem('username', data.data.name);  
+            } 
 
-            window.location.href = '/';  // Redirect to homepage or another page
-        } else {
-            console.log('No token returned in the response.');
+            window.location.href = '/';  
         }
 
-        return data;  // Return data for further processing if needed
+        return data;  
     } catch (error) {
         console.error('Error during login:', error);
     }
 }
-
-// Form submission handler remains the same
-const loginForm = document.forms['login'];  // Use the form name 'login'
-
-if (loginForm) {
-    loginForm.addEventListener('submit', async (event) => {
-        event.preventDefault();  // Prevent form from refreshing the page
-
-        const formData = new FormData(loginForm);  // Get form data
-
-        const userData = {
-            email: formData.get('email'),
-            password: formData.get('password'),
-        };
-
-        await loginUser(userData);  // Call the login function with user input
-    });
-}
-
-
-
-
-
