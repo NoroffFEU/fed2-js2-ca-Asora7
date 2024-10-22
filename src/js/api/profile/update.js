@@ -9,6 +9,8 @@
  * @param {string} [profileData.banner] - The URL of the user's new banner image (optional).
  * @returns {Promise<Object>} A promise that resolves to the updated user profile data.
  * @throws {Error} If the update fails.
+ *
+ * Logic will be implemented later, and the underscores will be removed when this function is fully developed.
  */
 
-export async function updateProfile(username, { avatar, banner }) {}
+// export async function updateProfile(username, { avatar, banner }) {}
