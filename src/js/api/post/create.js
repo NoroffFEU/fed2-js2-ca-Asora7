@@ -1,9 +1,9 @@
-import { API_SOCIAL_POSTS } from '../constants.js';  
-import { getHeaders } from '../headers.js';  
+import { API_SOCIAL_POSTS } from '../constants.js';
+import { getHeaders } from '../headers.js';
 
 /**
  * Creates a new post by sending the post data to the social API.
- * 
+ *
  * @async
  * @function createPost
  * @param {Object} postData - The data for the post to be created.
@@ -16,44 +16,23 @@ import { getHeaders } from '../headers.js';
  */
 
 export async function createPost({ title, body, tags, media }) {
-    try {
-        const response = await fetch(API_SOCIAL_POSTS, {
-            method: 'POST',
-            headers: getHeaders(),
-            body: JSON.stringify({ title, body, tags, media }),
-        });
+  try {
+    const response = await fetch(API_SOCIAL_POSTS, {
+      method: 'POST',
+      headers: getHeaders(),
+      body: JSON.stringify({ title, body, tags, media }),
+    });
 
-        if (!response.ok) {
-            const errorData = await response.json();
-            throw new Error(`Failed to create post: ${errorData.errors[0].message}`);
-        }
-
-        const data = await response.json();
-        console.log('Post created successfully:', data);  // Keep for success logs
-        return data;  
-
-    } catch (error) {
-        console.error('Error during post creation:', error);  // Keep for error logging
-        return null;  
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(`Failed to create post: ${errorData.errors[0].message}`);
     }
+
+    const data = await response.json();
+    console.log('Post created successfully:', data);
+    return data;
+  } catch (error) {
+    console.error('Error during post creation:', error);
+    return null;
+  }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

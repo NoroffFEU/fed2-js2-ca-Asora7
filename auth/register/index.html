@@ -2,54 +2,84 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Noroff FED2 JS2 CA</title>
+    <title>Noroff FED2 JS2 CA - Register</title>
     <script type="module" src="/src/app.js"></script>
+    <link rel="stylesheet" href="/src/css/main.scss" />
   </head>
-
-  <body>
-    <h1>Register</h1>
-
-    <form name="register">
-      <div>
-        <label for="name">Name</label>
-        <input
-          id="name"
-          type="text"
-          name="name"
-          required
-          maxlength="20"
-          pattern="^[\w]+$"
-          title="Please enter a username using only letters and numbers"
-        />
+  <body class="register-page">
+    <div
+      class="container vh-100 d-flex align-items-center justify-content-center bg-white"
+    >
+      <div class="row w-100" style="max-width: 900px">
+        <div
+          class="col-md-6 d-flex flex-column justify-content-center p-4 border"
+        >
+          <div class="text-center mb-4">
+            <h2>Register for Connectly</h2>
+          </div>
+          <form name="register">
+            <div class="mb-3">
+              <label for="name" class="form-label">Name</label>
+              <input
+                id="name"
+                type="text"
+                name="name"
+                class="form-control"
+                required
+                maxlength="20"
+                pattern="^[\w]+$"
+                title="Please enter a username using only letters and numbers"
+              />
+            </div>
+            <div class="mb-3">
+              <label for="email" class="form-label">Email</label>
+              <input
+                id="email"
+                type="email"
+                name="email"
+                class="form-control"
+                required
+                pattern="^[\w\-.]+@(stud\.)?noroff\.no$"
+                title="Please enter a valid noroff.no or stud.noroff.no address"
+              />
+            </div>
+            <div class="mb-3">
+              <label for="password" class="form-label">Password</label>
+              <input
+                type="password"
+                name="password"
+                id="password"
+                class="form-control"
+                required
+                minlength="8"
+              />
+            </div>
+            <div class="mb-3">
+              <label for="confirmPassword" class="form-label"
+                >Confirm Password</label
+              >
+              <input
+                type="password"
+                name="confirmPassword"
+                id="confirmPassword"
+                class="form-control"
+                required
+                minlength="8"
+              />
+            </div>
+            <button type="submit" class="btn btn-primary w-100 mb-3">
+              Register
+            </button>
+            <div class="text-center">
+              <small
+                >Already have an account?
+                <a href="/auth/login/">Log in here</a></small
+              >
+            </div>
+          </form>
+        </div>
       </div>
-
-      <div>
-        <label for="email">Email</label>
-        <input
-          id="email"
-          type="email"
-          name="email"
-          required
-          pattern="^[\w\-.]+@(stud\.)?noroff\.no$"
-          title="Please enter a valid noroff.no or stud.noroff.no address"
-        />
-      </div>
-
-      <div>
-        <label for="password">Password</label>
-        <input
-          type="password"
-          name="password"
-          id="password"
-          required
-          minlength="8"
-        />
-      </div>
-
-      <a href="/auth/login/">Login</a>
-      <button>Register</button>
-    </form>
+    </div>
   </body>
 </html>

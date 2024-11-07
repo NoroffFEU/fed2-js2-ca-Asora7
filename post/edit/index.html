@@ -3,19 +3,56 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Noroff FED2 JS2 CA</title>
+    <title>Edit Post</title>
     <script type="module" src="/src/app.js"></script>
+    <link rel="stylesheet" href="/src/css/main.scss" />
   </head>
-  <body>
-    <h1>Edit Post</h1>
-    <form id="editPostForm">
-        <input type="text" id="postTitle" placeholder="Title" required>
-        <textarea id="postBody" placeholder="Body" required></textarea>
-        <input type="text" id="postMedia" placeholder="Media URL">
-        <button type="submit">Update</button>
-        <button id="deletePostButton" type="button">Delete</button>
-    </form>
-    <div id="postContainer"></div> <!-- New container for displaying the updated post -->
-</body>
-
+  <body class="edit-post-page">
+    <div class="container my-5">
+      <h1 class="text-center mb-4">Edit Post</h1>
+      <form id="editPostForm">
+        <div class="mb-3">
+          <input
+            type="text"
+            id="postTitle"
+            class="form-control"
+            placeholder="Post Title"
+            required
+          />
+        </div>
+        <div class="mb-3">
+          <textarea
+            id="postBody"
+            class="form-control"
+            placeholder="Write your post here..."
+            rows="4"
+            required
+          ></textarea>
+        </div>
+        <div class="mb-3">
+          <input
+            type="text"
+            id="postMedia"
+            class="form-control"
+            placeholder="Media URL (optional)"
+          />
+        </div>
+        <div class="mb-3">
+          <input
+            type="text"
+            id="postTags"
+            class="form-control"
+            placeholder="Tags (optional, comma-separated)"
+          />
+        </div>
+        <div class="d-flex justify-content-between">
+          <button type="submit" class="btn btn-primary">Update Post</button>
+          <button id="deletePostButton" type="button" class="btn btn-danger">
+            Delete Post
+          </button>
+        </div>
+      </form>
+    </div>
+    <div id="postContainer" class="container mt-5"></div>
+  </body>
 </html>

@@ -1,0 +1,21 @@
+.home-page .main-content {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  height: 100%;
+  margin: 0;
+}
+
+.home-page .card img {
+  max-width: 100%;
+  height: auto;
+  max-height: 400px;
+}
+
+h1 {
+  margin-bottom: 2rem;
+}
+
+.img-fluid {
+  max-width: 100%;
+}

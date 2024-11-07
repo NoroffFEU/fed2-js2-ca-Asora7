@@ -1,0 +1,17 @@
+@import '../../node_modules/bootstrap/scss/bootstrap.scss';
+@import url('https://fonts.googleapis.com/css2?family=Italiana&family=Lora:wght@400&display=swap');
+@import '@fortawesome/fontawesome-free/css/all.min.css';
+
+@import 'header';
+@import 'login';
+@import 'register';
+@import 'profile';
+@import 'singlePost';
+@import 'create';
+@import 'edit';
+@import 'home';
+
+body {
+  margin-left: 270px;
+  font-family: 'Lora', serif;
+}

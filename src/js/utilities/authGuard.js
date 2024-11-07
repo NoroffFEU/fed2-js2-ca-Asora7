@@ -1,6 +1,6 @@
 /**
  * Authenticates the user by checking if they are logged in.
- * If the user is not logged in, they will be alerted and redirected 
+ * If the user is not logged in, they will be alerted and redirected
  * to the login page.
  *
  * @function authGuard
@@ -10,7 +10,7 @@
 
 export function authGuard() {
   if (!localStorage.token) {
-    alert("You must be logged in to view this page");
-    window.location.href = "/auth/login/";
+    alert('You must be logged in to view this page');
+    window.location.href = '/auth/login/';
   }
 }

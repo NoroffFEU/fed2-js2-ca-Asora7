@@ -1,20 +1,59 @@
 <!doctype html>
 <html lang="en">
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Create Post</title>
     <script type="module" src="/src/app.js"></script>
-</head>
-<body>
-    <h1>Create Post</h1>
-    <form name="createPost">
-        <input type="text" name="title" placeholder="Post Title" required>
-        <textarea name="body" placeholder="Write your post here..." required></textarea>
-        <input type="text" name="media" placeholder="Media URL (optional)">
-        <input type="text" name="tags" placeholder="Tags (optional, comma-separated)">
-        <button type="submit">Create Post</button>
-    </form>
-    <div id="postContainer"></div>
-</body>
+    <link rel="stylesheet" href="/src/css/main.scss" />
+  </head>
+  <body class="create-post-page">
+    <div class="container my-5">
+      <h1 class="text-center mb-4">Create Post</h1>
+      <form name="createPost" onsubmit="onCreatePost(event)">
+        <div class="mb-3">
+          <input
+            type="text"
+            name="title"
+            class="form-control"
+            placeholder="Post Title"
+            required
+          />
+        </div>
+        <div class="mb-3">
+          <textarea
+            name="body"
+            class="form-control"
+            placeholder="Write your post here..."
+            rows="4"
+            required
+          ></textarea>
+        </div>
+        <div class="mb-3">
+          <input
+            type="text"
+            name="media"
+            class="form-control"
+            placeholder="Media URL (optional)"
+          />
+        </div>
+        <div class="mb-3">
+          <input
+            type="text"
+            name="tags"
+            class="form-control"
+            placeholder="Tags (optional, comma-separated)"
+          />
+        </div>
+        <button
+          id="createPostButton"
+          type="submit"
+          class="btn btn-primary w-100"
+        >
+          Create Post
+        </button>
+      </form>
+    </div>
+    <div id="postContainer" class="container mt-5"></div>
+  </body>
 </html>

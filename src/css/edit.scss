@@ -1,0 +1,15 @@
+.edit-post-page #postContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 20px;
+  text-align: center;
+}
+
+.edit-post-page #postContainer img {
+  max-width: 100%;
+  height: auto;
+  max-height: 200px;
+  margin-top: 20px;
+}

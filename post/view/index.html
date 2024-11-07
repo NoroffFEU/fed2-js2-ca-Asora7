@@ -5,9 +5,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Single Post Page</title>
     <script type="module" src="/src/app.js"></script>
+    <link rel="stylesheet" href="/src/css/main.scss" />
   </head>
   <body>
-    <h1>Single Post Page</h1>
-    <div id="singlePostContainer"></div>
+    <div class="container mt-5">
+      <div id="singlePostContainer" class="post-container position-relative">
+        <h1 id="post-title" class="post-title">Post Title</h1>
+        <div class="post-image-container position-relative">
+          <button
+            id="editButton"
+            class="btn btn-primary edit-button position-absolute top-0 end-0 m-3"
+          >
+            Edit
+          </button>
+
+          <img
+            id="post-image"
+            class="post-image img-fluid"
+            src=""
+            alt="Post Image"
+          />
+        </div>
+
+        <div id="post-body" class="post-body mt-4">
+          <p>Your post content will be displayed here...</p>
+        </div>
+      </div>
+    </div>
   </body>
 </html>

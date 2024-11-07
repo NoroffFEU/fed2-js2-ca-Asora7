@@ -1,15 +1,49 @@
 <!doctype html>
 <html lang="en">
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Profile</title>
     <script type="module" src="/src/app.js"></script>
-</head>
-<body>
-    <h1>Profile</h1>
-    <h2>Your Posts</h2>
-    <div id="postContainer"></div> 
-</body>
+    <link rel="stylesheet" href="/src/css/main.scss" />
+  </head>
+  <body>
+    <div class="container-fluid p-4">
+      <div class="row">
+        <div class="col-12 text-center mb-4">
+          <img
+            src="https://via.placeholder.com/150"
+            alt="Profile Image"
+            class="rounded-circle profile-image"
+          />
+          <h3 class="mt-3">Username</h3>
+          <div class="d-flex justify-content-center mt-3">
+            <div class="profile-stat">
+              <h5>Posts</h5>
+              <p id="post-count">42</p>
+            </div>
+            <div class="profile-stat">
+              <h5>Followers</h5>
+              <p id="follower-count">150</p>
+            </div>
+            <div class="profile-stat">
+              <h5>Following</h5>
+              <p id="following-count">75</p>
+            </div>
+          </div>
+          <p class="mt-3" id="bio">
+            This is the bio of the user. It describes the user in a few
+            sentences.
+          </p>
+        </div>
+        <div class="col-12">
+          <h2>Your Posts</h2>
+          <div
+            class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4"
+            id="postContainer"
+          ></div>
+        </div>
+      </div>
+    </div>
+  </body>
 </html>
-
